@@ -53,3 +53,35 @@ void SortSting(int[,] array)
     }
 }
 
+// Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить
+// строку с наименьшей суммой элементов.
+Console.WriteLine("--------------Задача №56.--------------");
+int rows1 = 5;
+int columns1 = 4;
+int[,] arr = GetArray(rows1, columns1, 0, 10);
+PrintArray(arr);
+Console.WriteLine($"Строка (по индексу) с наименьшей суммой элементов - {StringMinSum(arr)}");
+
+int StringMinSum(int[,] arr)
+{
+    int result = 0;
+    int minsum = 0;
+    for (int i = 0; i < arr.GetLength(1); i++)
+    {
+        minsum += arr[0,i];
+    }
+    for (int i = 1; i < arr.GetLength(0); i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            sum += arr[i,j];
+        }
+        if (minsum > sum)
+        {
+            minsum = sum;
+            result = i;
+        }
+    }
+    return result;
+}
