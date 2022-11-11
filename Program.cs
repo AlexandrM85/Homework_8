@@ -88,7 +88,7 @@ int StringMinSum(int[,] arr)
 
 // Задача 58: Задайте две квадратные матрицы. Напишите программу, которая будет находить
 // произведение двух матриц.
-
+Console.WriteLine("--------------Задача №58.--------------");
 Console.WriteLine("Введите колличество строк 1 массива");
 int rowsA = int.Parse(Console.ReadLine()!);
 Console.WriteLine("Введите колличество столбцов 1 массива");
@@ -106,9 +106,9 @@ if (columnsA != rowsB)
 int[,] A = GetArray(rowsA, columnsA, 0, 10);
 int[,] B = GetArray(rowsB, columnsB, 0, 10);
 PrintArray(A);
-Console.WriteLine("--------");
+Console.WriteLine("********");
 PrintArray(B);
-Console.WriteLine("--------");
+Console.WriteLine("========");
 PrintArray(MultiplicationMatrix(A,B));
 
 int[,] MultiplicationMatrix(int[,] array1, int[,] array2)
@@ -126,3 +126,65 @@ int[,] MultiplicationMatrix(int[,] array1, int[,] array2)
     }
     return array3;
 }
+
+// Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел.
+// Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+Console.WriteLine("--------------Задача №60.--------------");
+Console.Write("Введите размеры трехмерного массива через пробел: ");
+string[] nums = Console.ReadLine()!.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+int[,,] matrix = GetArray3D(new int[] {int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2])}, 10, 99);
+PrintArray3D(matrix);
+
+int[,,] GetArray3D(int[] sizes, int min, int max)
+{
+    int[,,] result = new int[sizes[0], sizes[1], sizes[2]];
+    for (int i = 0; i < result.GetLength(0); i++)
+    {
+        for (int j = 0; j < result.GetLength(1); j++)
+        {
+            int k = 0;
+            while(k < result.GetLength(2))
+            {
+                int element = new Random().Next(min, max +1);
+                if (FindElement(result, element)) continue;
+                result[i, j, k] = element;
+                k++;
+            }
+        }        
+    }
+    return result;
+}
+
+bool FindElement(int[,,] array, int el)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            for (int k = 0; k < array.GetLength(2); k++)
+            {
+                if (array[i, j, k] == el) return true;
+            }
+        }
+    }
+    return false;
+}
+
+void PrintArray3D(int[,,] Array)
+{
+    for (int i = 0; i < Array.GetLength(0); i++)
+    {
+        for (int j = 0; j < Array.GetLength(1); j++)
+        {
+            for (int k = 0; k < Array.GetLength(2); k++)
+            {
+                Console.Write($"{Array[i, j, k]} ({i},{j},{k}) ");
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+}
+
+
+
